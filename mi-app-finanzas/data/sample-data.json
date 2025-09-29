@@ -1,0 +1,84 @@
+{
+  "moneda": "COP",
+  "ingresos": [
+    {
+      "monto": 5000000,
+      "fuente": "Salario",
+      "fecha": "2025-09-01"
+    },
+    {
+      "monto": 1000000,
+      "fuente": "Freelance",
+      "fecha": "2025-09-15"
+    }
+  ],
+  "gastos": [
+    {
+      "monto": 150000,
+      "categoria": "alimentacion",
+      "nota": "Supermercado",
+      "fecha": "2025-09-02"
+    },
+    {
+      "monto": 50000,
+      "categoria": "transporte",
+      "nota": "Bus",
+      "fecha": "2025-09-03"
+    },
+    {
+      "monto": 200000,
+      "categoria": "entretenimiento",
+      "nota": "Cine",
+      "fecha": "2025-09-10"
+    },
+    {
+      "monto": 300000,
+      "categoria": "servicios",
+      "nota": "Factura de luz",
+      "fecha": "2025-09-12"
+    },
+    {
+      "monto": 100000,
+      "categoria": "otros",
+      "nota": "Regalo",
+      "fecha": "2025-09-15"
+    }
+  ],
+  "presupuestos": {
+    "2025-09": {
+      "alimentacion": { "asignado": 1000000, "gastado": 150000 },
+      "transporte": { "asignado": 200000, "gastado": 50000 },
+      "entretenimiento": { "asignado": 300000, "gastado": 200000 },
+      "servicios": { "asignado": 500000, "gastado": 300000 },
+      "otros": { "asignado": 200000, "gastado": 100000 }
+    },
+    "2025-08": {
+      "alimentacion": { "asignado": 800000, "gastado": 900000 },
+      "transporte": { "asignado": 150000, "gastado": 120000 },
+      "entretenimiento": { "asignado": 250000, "gastado": 300000 },
+      "servicios": { "asignado": 400000, "gastado": 350000 },
+      "otros": { "asignado": 150000, "gastado": 100000 }
+    }
+  },
+  "metas": [
+    {
+      "nombre": "Vacaciones",
+      "total": 5000000,
+      "progreso": 1000000,
+      "plazo": "2026-06-30"
+    },
+    {
+      "nombre": "Comprar laptop",
+      "total": 3000000,
+      "progreso": 1500000,
+      "plazo": "2025-12-31"
+    }
+  ],
+  "atajos": {
+    "alimentacion": [50000, 100000, 200000],
+    "transporte": [10000, 30000, 50000],
+    "entretenimiento": [50000, 100000, 200000],
+    "servicios": [100000, 200000, 500000],
+    "otros": [50000, 100000, 150000]
+  }
+}

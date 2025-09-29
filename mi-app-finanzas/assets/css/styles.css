@@ -1,0 +1,87 @@
+/* assets/css/styles.css */
+
+/* Estilos base para la app de finanzas personales */
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Semáforo financiero */
+.semaforo {
+    @apply w-5 h-5 rounded-full inline-block mx-1;
+    transition: background-color 0.3s ease;
+}
+
+/* Personalización de progress bars */
+progress[value]::-webkit-progress-bar {
+    @apply bg-gray-200 rounded;
+}
+progress[value]::-webkit-progress-value {
+    @apply rounded;
+}
+.progress-green::-webkit-progress-value {
+    @apply bg-green-500;
+}
+.progress-yellow::-webkit-progress-value {
+    @apply bg-yellow-500;
+}
+.progress-red::-webkit-progress-value {
+    @apply bg-red-500;
+}
+
+/* Estilos para categorías */
+.category-food {
+    @apply border-l-4 border-yellow-500;
+}
+.category-transport {
+    @apply border-l-4 border-blue-500;
+}
+.category-entertainment {
+    @apply border-l-4 border-purple-500;
+}
+.category-services {
+    @apply border-l-4 border-green-500;
+}
+.category-others {
+    @apply border-l-4 border-gray-500;
+}
+
+/* Enfoque en formularios */
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    @apply border-blue-500 ring-2 ring-blue-200;
+}
+
+/* Botones generales */
+button {
+    @apply transition-all duration-200;
+}
+button:hover:not(:disabled) {
+    @apply -translate-y-0.5 shadow-md;
+}
+
+/* Estilos para modales */
+.modal-content {
+    @apply bg-white p-6 rounded-lg shadow-xl;
+}
+
+/* Estilos para gráficos (Chart.js) */
+canvas {
+    @apply max-w-full h-auto;
+}
+
+/* Estilos para errores */
+.error {
+    @apply text-red-500 text-sm mt-1;
+}

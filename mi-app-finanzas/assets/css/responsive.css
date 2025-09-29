@@ -1,0 +1,115 @@
+/* assets/css/responsive.css */
+
+/* Móviles (hasta 640px) */
+@media (max-width: 640px) {
+    .container {
+        @apply px-2;
+    }
+    .grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+    .btn {
+        @apply w-full py-3 text-base;
+    }
+    .gasto-rapido {
+        @apply w-full justify-center text-sm py-2;
+    }
+    .input {
+        @apply text-sm p-1;
+    }
+    .semaforo {
+        @apply w-4 h-4;
+    }
+    progress[value] {
+        @apply h-3;
+    }
+    .error:not(.hidden) {
+        @apply text-xs;
+    }
+    nav ul {
+        @apply flex-col gap-2;
+    }
+    nav ul li a {
+        @apply w-full text-center py-3 text-sm;
+    }
+    .page {
+        @apply p-2;
+    }
+    ul li {
+        @apply text-sm;
+    }
+}
+
+/* Tablets (641px a 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        @apply px-3;
+    }
+    .grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .btn {
+        @apply px-3 py-2 text-sm;
+    }
+    .gasto-rapido {
+        @apply px-2 py-1 text-sm;
+    }
+    .input {
+        @apply p-2;
+    }
+    .semaforo {
+        @apply w-5 h-5;
+    }
+    progress[value] {
+        @apply h-4;
+    }
+    .error:not(.hidden) {
+        @apply text-sm;
+    }
+    nav ul {
+        @apply flex-row gap-2;
+    }
+    nav ul li a {
+        @apply px-2 py-2;
+    }
+    .page {
+        @apply p-3;
+    }
+}
+
+/* Escritorios (1025px en adelante) */
+@media (min-width: 1025px) {
+    .container {
+        @apply px-4;
+    }
+    .grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .btn {
+        @apply px-4 py-2 text-base;
+    }
+    .gasto-rapido {
+        @apply px-3 py-2 text-sm;
+    }
+    .input {
+        @apply p-2;
+    }
+    .semaforo {
+        @apply w-5 h-5;
+    }
+    progress[value] {
+        @apply h-4;
+    }
+    .error:not(.hidden) {
+        @apply text-sm;
+    }
+    nav ul {
+        @apply flex-row gap-4;
+    }
+    nav ul li a {
+        @apply px-3 py-2;
+    }
+    .page {
+        @apply p-4;
+    }
+}

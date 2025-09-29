@@ -1,0 +1,106 @@
+/* assets/css/components.css */
+
+/* Botones generales */
+.btn {
+    @apply px-4 py-2 rounded-md text-white font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
+}
+.btn:hover:not(:disabled) {
+    @apply opacity-80;
+}
+.btn.bg-blue-500 {
+    @apply bg-blue-500;
+}
+.btn.bg-red-500 {
+    @apply bg-red-500;
+}
+.btn.bg-green-500 {
+    @apply bg-green-500;
+}
+.btn.bg-gray-500 {
+    @apply bg-gray-500;
+}
+
+/* Botones rápidos para gastos */
+.gasto-rapido {
+    @apply bg-gray-200 px-3 py-2 rounded-md text-sm flex items-center gap-1 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
+}
+.gasto-rapido:hover:not(:disabled) {
+    @apply bg-gray-300;
+}
+
+/* Inputs de formularios */
+.input {
+    @apply w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200;
+}
+.input:invalid {
+    @apply border-red-500;
+}
+
+/* Mensajes de error */
+.error:not(.hidden) {
+    @apply block text-sm mt-1 text-red-500;
+}
+
+/* Semáforo en Dashboard */
+.semaforo {
+    @apply w-5 h-5 rounded-full inline-block mx-1 transition-background-color duration-300;
+}
+
+/* Barra de progreso en Dashboard */
+progress[value] {
+    @apply w-full h-4 rounded appearance-none;
+}
+progress[value]::-webkit-progress-bar {
+    @apply bg-gray-200 rounded;
+}
+progress[value]::-webkit-progress-value {
+    @apply rounded transition-all duration-300;
+}
+.progress-green::-webkit-progress-value {
+    @apply bg-green-500;
+}
+.progress-yellow::-webkit-progress-value {
+    @apply bg-yellow-500;
+}
+.progress-red::-webkit-progress-value {
+    @apply bg-red-500;
+}
+progress[value]::-moz-progress-bar {
+    @apply rounded;
+}
+.progress-green::-moz-progress-bar {
+    @apply bg-green-500;
+}
+.progress-yellow::-moz-progress-bar {
+    @apply bg-yellow-500;
+}
+.progress-red::-moz-progress-bar {
+    @apply bg-red-500;
+}
+
+/* Categorías con emojis */
+.category-alimentacion::before {
+    content: '🍕';
+    @apply mr-1;
+}
+.category-transporte::before {
+    content: '🚍';
+    @apply mr-1;
+}
+.category-entretenimiento::before {
+    content: '🎬';
+    @apply mr-1;
+}
+.category-servicios::before {
+    content: '💡';
+    @apply mr-1;
+}
+.category-otros::before {
+    content: '📦';
+    @apply mr-1;
+}
+
+/* Listas (gastos recientes, presupuestos, metas) */
+ul li {
+    @apply flex items-center gap-2;
+}

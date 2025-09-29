@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Mi App Finanzas</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="icon" href="assets/icons/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 text-white p-4">
+        <nav id="navigation" class="container mx-auto">
+            <ul class="flex justify-center space-x-2 md:space-x-4" role="navigation">
+                <li><button data-page="dashboard" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir al Dashboard" aria-current="false">Dashboard</button></li>
+                <li><button data-page="presupuestos" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir a Presupuestos" aria-current="false">Presupuesto</button></li>
+                <li><button data-page="gastos" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir a Gastos" aria-current="false">Gastos</button></li>
+                <li><button data-page="metas" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir a Metas" aria-current="false">Metas</button></li>
+                <li><button data-page="reportes" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir a Reportes" aria-current="false">Reportes</button></li>
+                <li><button data-page="configuraciones" class="btn bg-blue-600 hover:bg-blue-700" aria-label="Ir a Configuración" aria-current="false">Config</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="content" class="container mx-auto p-4">
+        <!-- Dashboard -->
+        <section id="dashboard" class="page hidden fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="card">
+                    <h3 class="text-lg font-semibold">Ingresos</h3>
+                    <p id="ingresos" class="text-2xl" aria-live="polite"></p>
+                </div>
+                <div class="card">
+                    <h3 class="text-lg font-semibold">Gastos</h3>
+                    <p id="gastos" class="text-2xl" aria-live="polite"></p>
+                </div>
+                <div class="card">
+                    <h3 class="text-lg font-semibold">Balance</h3>
+                    <p id="balance" class="text-2xl" aria-live="polite"></p>
+                </div>
+            </div>
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold">Progreso del Gasto Mensual</h3>
+                <progress id="progreso-gasto" class="w-full h-4" value="0" max="100" aria-describedby="porcentaje-gasto"></progress>
+                <p id="porcentaje-gasto" class="text-sm" aria-live="polite"></p>
+            </div>
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold">Estado Financiero</h3>
+                <div id="semaforo" class="semaforo" aria-live="polite"></div>
+                <span id="estado-texto" aria-live="polite"></span>
+            </div>
+            <div id="excedente" class="card hidden">
+                <h3>💰 Excedente del mes pasado: <span id="excedente-monto" aria-live="polite"></span></h3>
+                <p>¿Qué quieres hacer con este dinero?</p>
+                <div class="flex gap-2">
+                    <button id="guardar-ahorro" class="btn bg-green-500" aria-label="Guardar excedente como ahorro">💾 Guardarlo como ahorro</button>
+                    <button id="trasladar-mes" class="btn bg-blue-500" aria-label="Trasladar excedente al mes siguiente">📅 Trasladar al mes siguiente</button>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold">Resumen Financiero</h3>
+                <canvas id="dashboard-chart" class="max-w-full h-64"></canvas>
+            </div>
+        </section>
+
+        <!-- Presupuestos -->
+        <section id="presupuestos" class="page hidden fade-in">
+            <h2 class="text-xl font-semibold mb-4">Presupuestos</h2>
+            <div class="flex justify-between items-center mb-4">
+            <button id="mes-anterior" class="btn bg-gray-200" aria-label="Mes anterior" aria-controls="lista-presupuestos">← Anterior</button>
+            <h3 id="mes-actual" class="text-lg font-medium" aria-live="polite"></h3>
+            <button id="mes-siguiente" class="btn bg-gray-200" aria-label="Mes siguiente" aria-controls="lista-presupuestos">Siguiente →</button>
+            </div>
+            <p class="mb-2">Excedente: <span id="excedente-mes" aria-live="polite">$0</span></p>
+            <ul id="lista-presupuestos" role="list" class="space-y-4 divide-y divide-gray-200" aria-live="polite"></ul>
+            <button id="ajustar-mes" class="btn bg-blue-500 mt-4" aria-label="Ajustar presupuestos para el mes">🔧 Ajustar Presupuesto</button>
+            <span id="budget-error" class="error hidden" role="alert"></span>
+        </section>
+
+        <!-- Gastos -->
+        <section id="gastos" class="page hidden fade-in">
+            <h2 class="text-2xl font-bold mb-4">Gastos</h2>
+            <form id="form-gastos" class="space-y-4 mb-6">
+                <div>
+                    <label for="monto-gasto" class="block mb-1 font-medium">Monto</label>
+                    <input id="monto-gasto" type="number" step="0.01" min="0" class="w-full p-2 border rounded" aria-describedby="monto-error">
+                <span id="monto-error" class="error hidden" role="alert"></span>
+                </div>
+                <div>
+                    <label for="categoria-gasto" class="block mb-1 font-medium">Categoría</label>
+                    <select id="categoria-gasto" class="w-full p-2 border rounded" aria-describedby="categoria-error">
+                        <option value="">Seleccione una categoría</option>
+                    </select>
+                    <span id="categoria-error" class="error hidden" role="alert"></span>
+                </div>
+                <div>
+                    <label for="nota-gasto" class="block mb-1 font-medium">Nota (Opcional)</label>
+                    <input id="nota-gasto" type="text" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label for="fecha-gasto" class="block mb-1 font-medium">Fecha</label>
+                    <input id="fecha-gasto" type="date" class="w-full p-2 border rounded" aria-describedby="fecha-error">
+                    <span id="fecha-error" class="error hidden" role="alert"></span>
+                </div>
+                <button type="submit" class="btn bg-blue-500 text-white">Agregar Gasto</button>
+            </form>
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Gastos Rápidos</h3>
+                <ul id="gastos-rapidos" class="grid gap-2 md:grid-cols-3" role="list" aria-label="Botones de gastos rápidos"></ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-2">Gastos Recientes</h3>
+                <ul id="gastos-recientes" class="space-y-2" role="list" aria-label="Gastos recientes"></ul>
+            </div>
+        </section>
+
+        <!-- Metas -->
+        <section id="metas" class="page hidden fade-in">
+            <h2 class="text-2xl font-bold mb-4">Metas</h2>
+            <canvas id="goals-chart" class="mb-4" aria-label="Gráfico de progreso de metas"></canvas>
+            <ul id="lista-metas" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" role="list" aria-live="polite"></ul>
+            <button id="add-meta" class="btn bg-blue-500 mt-4" aria-label="Agregar nueva meta">Agregar Meta</button>
+            <span id="goals-error" class="error hidden" role="alert"></span>
+        </section>
+
+        <!-- Reportes -->
+        <section id="reportes" class="page hidden fade-in">
+            <h2 class="text-2xl font-bold mb-4">Reportes</h2>
+            <label for="mes-reporte" class="block mb-2 font-medium">Seleccionar Mes</label>
+            <select id="mes-reporte" class="w-full p-2 border rounded mb-4" aria-label="Seleccionar mes para reportes"></select>
+            <canvas id="report-chart" class="mb-4" aria-label="Gráfico de reportes"></canvas>
+            <ul id="lista-reportes" class="space-y-2" aria-live="polite"></ul>
+        </section>
+
+        <!-- Configuración -->
+       <section id="configuraciones" class="page hidden fade-in">
+    <h2 class="text-xl font-semibold mb-4">Configuración</h2>
+    <div class="space-y-4">
+        <div>
+            <label for="currency-select" class="block mb-1">Moneda</label>
+            <select id="currency-select" class="input" aria-label="Seleccionar moneda" aria-describedby="settings-error"></select>
+        </div>
+        <button id="reset-data" class="btn bg-red-500" aria-label="Restablecer todos los datos">Restablecer Datos</button>
+        <button id="export-data" class="btn bg-blue-500" aria-label="Exportar datos a JSON">Exportar Datos</button>
+        <div>
+            <label for="import-data" class="block mb-1">Importar Datos</label>
+            <input id="import-data" type="file" accept=".json" class="input" aria-label="Importar archivo JSON de datos" aria-describedby="settings-error">
+        </div>
+        <span id="settings-error" class="error hidden" role="alert"></span>
+    </div>
+</section>
+</main>
+
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center" role="dialog" aria-modal="true">
+    <div class="modal-content bg-white p-6 rounded-md max-w-md w-full">
+        <h2 id="modal-title" class="text-lg font-semibold mb-4"></h2>
+        <div id="modal-message" class="mb-4"></div>
+        <div class="flex justify-end gap-2">
+            <button id="modal-confirm" class="btn bg-blue-500 hidden">Confirmar</button>
+            <button id="modal-cancel" class="btn bg-gray-200">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+    <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
